@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'BuildLog.md'
+      - "BuildLog.md"
 env:
   BUILD_TYPE: Release
 
@@ -21,9 +21,9 @@ jobs:
         id: aseprite-link
         uses: a1393323447/fetch-release@main
         with:
-            group: aseprite
-            repo: aseprite
-            match: Aseprite-.*?-Source.zip
+          group: aseprite
+          repo: aseprite
+          match: Aseprite-.*?-Source.zip
 
   create-release:
     name: Create Release
@@ -50,9 +50,10 @@ jobs:
       contents: write
     runs-on: ${{ matrix.os }}
     strategy:
-        matrix:
-          os: [ windows-latest, ubuntu-latest, macOS-latest ]
-        fail-fast: false
+      matrix:
+        os: [windows-latest, macOS-latest]
+        # os: [ windows-latest, ubuntu-latest, macOS-latest ]
+      fail-fast: false
     steps:
       - name: Install dependencies (Windows)
         if: matrix.os == 'windows-latest'
@@ -67,9 +68,9 @@ jobs:
         id: skia-link
         uses: a1393323447/fetch-release@main
         with:
-            group: aseprite
-            repo: skia
-            match: Skia-${{ runner.os }}-Release-x64(-libstdc\+\+)?.zip
+          group: aseprite
+          repo: skia
+          match: Skia-${{ runner.os }}-Release-x64(-libstdc\+\+)?.zip
       - name: Download Skia
         run: |
           curl -o Skia-${{ runner.os }}-Release-x64.zip -L ${{ steps.skia-link.outputs.download-link }}
